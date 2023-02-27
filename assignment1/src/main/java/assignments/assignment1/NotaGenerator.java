@@ -103,7 +103,6 @@ public class NotaGenerator {
         System.out.println("[2] Generate Nota");
         System.out.println("[0] Exit");
     }
-
     /**
      * Method untuk menampilkan paket.
      */
@@ -172,11 +171,6 @@ public class NotaGenerator {
         paket = paket.toLowerCase();
         int laundryTime =   0;
         int harga = 0;
-        /*
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
-        Date date = formatter.parse(tanggalTerima);
-        Date tanggalSelesai = date.
-         */
         if (paket.equalsIgnoreCase("express")){
             laundryTime = 1;
             harga = 12000;
