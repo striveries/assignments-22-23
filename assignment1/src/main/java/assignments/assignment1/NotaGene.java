@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class NotaGenerator {
+public class NotaGene {
     private static final Scanner input = new Scanner(System.in);
 
     /**
@@ -27,7 +27,8 @@ public class NotaGenerator {
             }
             else if (choice == 1){ // generate ID
                 System.out.println("Masukkan nama Anda: ");
-                String name = input.nextLine();
+                String name = input.next();
+                input.nextLine();
                 System.out.println("Masukkan nomor handphone Anda: ");
                 String noHP = input.next();
 
@@ -38,18 +39,14 @@ public class NotaGenerator {
                 }
                 System.out.println("ID Anda : " + generateId(name, noHP));
             }
+            
             else if (choice == 2){
                 System.out.println("Masukkan nama Anda: ");
-                String name = input.nextLine();
+                String name = input.next();
+                input.nextLine();
                 System.out.println("Masukkan nomor handphone Anda: ");
                 String noHP = input.next();
                 input.nextLine();
-                while (noHP.matches("\\d+") == false){
-                    System.out.println("Nomor hp hanya menerima digit");
-                    System.out.println("Masukkan nomor handphone Anda: ");
-                    noHP = input.next();
-                    input.nextLine();
-                }
                 System.out.println("Masukkan tanggal terima: ");
                 String tanggalTerima = input.next();
                 System.out.println("Masukkan paket laundry: ");
@@ -84,7 +81,8 @@ public class NotaGenerator {
                         System.out.println("Harap masukkan berat cucian Anda dalam bentuk bilangan positif.");
                     }
                 }          
-                System.out.println(generateNota(generateId(name, noHP), paket, beratCucian, tanggalTerima));            }
+                generateNota(generateId(name, noHP), paket, beratCucian, tanggalTerima);
+            }
          } catch (InputMismatchException e){
                 System.out.println("Pilihan tidak diketahui, silakan periksa kembali!");
                 input.nextLine();  
@@ -123,12 +121,10 @@ public class NotaGenerator {
      */
     public static String generateId(String nama, String nomorHP){
         // TODO: Implement generate ID sesuai soal.
-        String numID = nama;
-        if (numID.contains(" ")){
-            numID = nama.substring(0,nama.indexOf(' ')).toUpperCase();
-        }
+            String numID = nama.toUpperCase();
+
         int checkSum = 7;
-        for (int i=0; i<numID.length(); i++){
+        for (int i=0; i<nama.length(); i++){
             char letter = numID.charAt(i);
             checkSum += (int) letter - 64;
         }
@@ -161,6 +157,8 @@ public class NotaGenerator {
             System.out.println("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg");
         }
         System.out.println("Nota Laundry");
+        System.out.println("ID    : " + id);
+        System.out.println("Paket : " + paket);
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Calendar cal = Calendar.getInstance();
         try{  
@@ -191,13 +189,11 @@ public class NotaGenerator {
         }
         cal.add(Calendar.DAY_OF_MONTH, laundryTime);
         String tanggalSelesai = formatter.format(cal.getTime());
-        String nota = "ID    : "+id+"\n" +
-                "Paket : "+paket+"\n" +
-                "Harga :\n" +
-                 berat + " kg x " + harga + " = " + harga*berat+ "\n" +
-                "Tanggal Terima  : "+tanggalTerima+"\n" +
-                "Tanggal Selesai : "+tanggalSelesai;
-        return nota;
+        System.out.println("Harga :");
+        System.out.println(berat + " kg x " + harga + " = " + harga*berat);
+        System.out.println("Tanggal Terima : " + tanggalTerima);
+        System.out.println("Tanggal Selesai : " + tanggalSelesai);
+        return "success"; // bingung returnnya gimanaya
     }
 }
 

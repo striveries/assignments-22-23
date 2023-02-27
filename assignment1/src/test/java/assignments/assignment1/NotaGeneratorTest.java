@@ -2,8 +2,6 @@ package assignments.assignment1;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
-import NotaGenerator;
-
 
 public class NotaGeneratorTest {
     @Test
