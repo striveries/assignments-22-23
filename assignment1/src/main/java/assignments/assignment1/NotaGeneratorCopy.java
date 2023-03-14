@@ -10,7 +10,7 @@
  import java.util.Scanner;
  import java.util.*;
  
- public class NotaGenerator {
+ public class NotaGeneratorCopy {
      // memanggil scanner
      private static final Scanner input = new Scanner(System.in);
      /* Program berjalan di main program utama
@@ -98,7 +98,16 @@
          }  
          while (a); // loop akan berjalan selama a bernilai true
      } 
- 
+     
+     public static boolean validasiNoHp(String noHp){
+        while (noHp.matches("\\d+") == false){ // loop untuk validasi nomor HP
+            System.out.println("Nomor hp hanya menerima digit");
+            System.out.println("Masukkan nomor handphone Anda: ");
+            noHp = input.nextLine();
+        }
+        return true;
+     }
+
      /**
       * Method untuk menampilkan menu di NotaGenerator.
       */
@@ -156,7 +165,7 @@
              berat = 2;
              System.out.println("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg");
          }
-         int laundryTime = 0;
+         int laundryTime =   0;
          int harga = 0;
          // klasifikasi paket laundry dengan perbedaan harga dan waktu pengerjaan
          if (paket.equalsIgnoreCase("express")){
@@ -177,7 +186,8 @@
          LocalDate dateSelesai = dateTerima.plusDays(laundryTime);
          String dateReceived = dateTerima.format(dateTimeFormatter);
          String dateCompleted = dateSelesai.format(dateTimeFormatter);
-             
+         
+         System.out.println("Nota Laundry");    
          String nota = "ID    : "+id+"\n" +
                  "Paket : "+paket+"\n" +
                  "Harga :\n" +
@@ -186,5 +196,6 @@
                  "Tanggal Selesai : "+dateCompleted;
          return nota;
      }
-     
  }
+ 
+ 
