@@ -1,6 +1,5 @@
 package assignments.assignment2;
 
-import assignments.assignment1.NotaGenerator;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -21,24 +20,37 @@ public class Nota {
     private boolean isReady;
     private int harga;
     private int sisaHariPengerjaan;
+    private static int idNotaCounter = 0;
     
 
     // TODO: tambahkan attributes yang diperlukan untuk class ini
-    public Nota(String paket, int berat, String tanggalMasuk) {
+    public Nota(Member member, String paket, int berat, String tanggalMasuk) {
         // TODO: buat constructor untuk class ini
+        this.member = member;
         this.paket = paket;
         this.berat = berat;
         this.tanggalMasuk = tanggalMasuk;
         setHargaWaktu(paket);
         setIsReady();
+        setIdNota();
+
     }
 
     public int getIdNota(){
         return idNota;
     }
     
-    public void setIdNota(int newIdNota){
-        idNota = newIdNota;
+    public void setIdNota(){
+        idNota = idNotaCounter;
+        idNotaCounter++;
+    }
+
+    public int getBerat(){
+        return berat;
+    }
+
+    public String getTanggalMasuk(){
+        return tanggalMasuk;
     }
 
     public String getPaket(){
@@ -65,7 +77,7 @@ public class Nota {
             isReady = true;
         }
     }
-
+ 
     public void setHargaWaktu(String paket){
         // klasifikasi paket laundry dengan perbedaan harga dan waktu pengerjaan
         if (paket.equalsIgnoreCase("express")){
@@ -99,13 +111,12 @@ public class Nota {
         return "Belum bisa diambil :(";
     }
 
+    // public String setMember(id){
+
+    // }
+
 
     public String generateNota(String id, String paket, int berat, String tanggalTerima){
-        // untuk berat kurang dari 2, dibulatkan menjadi 2
-        if (berat < 2){
-            berat = 2;
-            System.out.println("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg");
-        }
         
         // memformat tanggal dan menambahkan tanggal selesai berdasarkan waktu pengerjaan (laundryTime)
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -113,14 +124,22 @@ public class Nota {
         LocalDate dateSelesai = dateTerima.plusDays(sisaHariPengerjaan);
         String dateReceived = dateTerima.format(dateTimeFormatter);
         String dateCompleted = dateSelesai.format(dateTimeFormatter);
+        String tulisanHarga;
+        if (member.getBonusCounter() == 3){
+            tulisanHarga =  berat + " kg x " + harga + " = " + harga*berat+ " = " + harga*berat/2 +  " (Discount member 50%!!!)\n";
+            member.resetBonusCounter();
+        }
+        else{
+            tulisanHarga = berat + " kg x " + harga + " = " + harga*berat+ "\n" ;
+        }
 
         String nota = "ID    : "+id+"\n" +
                 "Paket : "+paket+"\n" +
                 "Harga :\n" +
-                berat + " kg x " + harga + " = " + harga*berat+ "\n" +
+                tulisanHarga +
                 "Tanggal Terima  : "+dateReceived+"\n" +
                 "Tanggal Selesai : "+dateCompleted+"\n" + 
-                "Status      	: "+this.getStatus()+"\n";
+                "Status      	: "+getStatus()+"\n";
         return nota;
     }
 

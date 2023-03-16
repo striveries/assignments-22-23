@@ -12,7 +12,6 @@ public class MainMenu {
     private static Calendar cal = Calendar.getInstance();
     private static ArrayList<Nota> notaList = new ArrayList<Nota>();
     private static ArrayList<Member> memberList = new ArrayList<Member>();
-    private static int idNotaCounter = 0;
 
     public static void main(String[] args) {
         boolean isRunning = true;
@@ -61,14 +60,15 @@ public class MainMenu {
     private static void handleGenerateNota() {
         System.out.println("Masukan ID member: ");
         String id = input.nextLine();
-       
+        Member thisMember = null; 
+        
         if (validateMember(id) == false){
-           System.out.printf("Member dengan %s tidak ditemukan!\n",id);
+            System.out.printf("Member dengan %s tidak ditemukan!\n",id);
         }
         else {
             System.out.println("Masukan paket laundry: ");
             String paket = input.nextLine();
-            paket = paket.toLowerCase();
+
             // loop untuk validasi paket laundry
             while (!("express".equalsIgnoreCase(paket) || "reguler".equalsIgnoreCase(paket) || "fast".equalsIgnoreCase(paket))){
                 if (paket.equals("?")){
@@ -101,12 +101,24 @@ public class MainMenu {
                     System.out.println("Harap masukkan berat cucian Anda dalam bentuk bilangan positif.");
                 }
             }
-            System.out.printf("[ID Nota = %d]\n",idNotaCounter);
-            idNotaCounter += 1;
+            // untuk berat kurang dari 2, dibulatkan menjadi 2
+            if (beratCucian < 2){
+                beratCucian = 2;
+                System.out.println("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg");
+            }
+        
             // memanggil dan mencetak method generate nota          
             String tanggalMasuk = fmt.format(cal.getTime());
-            Nota newNota = new Nota(paket, beratCucian, tanggalMasuk);
+            for (Member member : memberList){
+                if (id.equals(member.getId())){
+                    thisMember = member;
+                }
+            }
+            thisMember.plusBonusCounter(); 
+            Nota newNota = new Nota(thisMember, paket, beratCucian, tanggalMasuk);
             notaList.add(newNota);
+            System.out.println("Berhasil menambahkan nota!");
+            System.out.printf("[ID Nota = %d]\n", newNota.getIdNota());
             System.out.println(newNota.generateNota(id, paket, beratCucian, tanggalMasuk)); 
          }   
 }
@@ -114,8 +126,9 @@ public class MainMenu {
     private static void handleListNota() {
         // TODO: handle list semua nota pada sistem
         System.out.printf("Terdaftar %d nota dalam sistem.\n",notaList.size());
-        for (int i=0;i<notaList.size();i++){
-            System.out.printf("- [%d] Status      	: %s\n",i,notaList.get(i).getStatus());
+        for (Nota thisNota : notaList){
+            int thisId = thisNota.getIdNota();
+            System.out.printf("- [%d] Status      	: %s\n",thisId,thisNota.getStatus());
         }
     }
 
@@ -150,36 +163,19 @@ public class MainMenu {
         }
         else{
             for (Nota thisNota : notaList){
-                if (thisNota.getIsReady()){
-                    System.out.printf("Nota dengan ID %d berhasil diambil!", idNota);
-                    System.out.println(notaList);
-                    notaList.remove(idNota);
-                    System.out.println(notaList);
-                    break;
-                }
-                else{
-                    System.out.printf("Nota dengan ID %d gagal diambil!\n", idNota);
-                    break;
+                    if (idNota == thisNota.getIdNota()){
+                        if (thisNota.getIsReady()){
+                            System.out.printf("Nota dengan ID %d berhasil diambil!", idNota);
+                            notaList.remove(thisNota);
+                            break;
+                        }
+                        else{
+                            System.out.printf("Nota dengan ID %d gagal diambil!\n", idNota);
+                            break;
+                        }
                 }
             }
         }
-
-        // for (Nota nota : notaList){
-        //     if (idNota == nota.getIdNota()){
-        //         if (nota.getIsReady()){
-        //             // belom validasi is ready
-        //             System.out.printf("Nota dengan ID %d berhasil diambil!", idNota);
-        //             System.out.println(notaList);
-        //             notaList.remove(idNota);
-        //             System.out.println(notaList);
-        //         }
-        //         else{
-        //             System.out.printf("Nota dengan ID %d gagal diambil!\n", idNota);
-        //         }
-        //     }
-        // }
-        // System.out.printf("Nota dengan ID %d tidak ditemukan!\n", idNota);
-
     }
 
 

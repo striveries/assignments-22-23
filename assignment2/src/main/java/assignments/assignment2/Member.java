@@ -40,4 +40,17 @@ public class Member {
     public String getNoHp(){
         return noHp;
     }
+
+    public int getBonusCounter(){
+        return bonusCounter;
+    }
+
+    public void plusBonusCounter(){
+        bonusCounter += 1;
+    }
+
+    public void resetBonusCounter(){
+        bonusCounter = 0;
+    }
+
 }
