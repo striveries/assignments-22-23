@@ -1,24 +1,26 @@
 package assignments.assignment2;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Scanner;
-import java.util.ArrayList;
 
-import static assignments.assignment1.NotaGenerator.*;
+//mengimport library yang dibutuhkan
+import java.text.SimpleDateFormat; //  library untuk formatting tanggal
+import java.util.Calendar; // library untuk tanggal harian
+import java.util.Scanner; // library untuk meminta input
+import java.util.ArrayList; // library untuk data structure
+
+import static assignments.assignment1.NotaGenerator.*; // mengimport TP 1 untuk menggunakan method generateId
 
 public class MainMenu {
-    private static final Scanner input = new Scanner(System.in);
-    private static SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
-    private static Calendar cal = Calendar.getInstance();
-    private static ArrayList<Nota> notaList = new ArrayList<Nota>();
-    private static ArrayList<Member> memberList = new ArrayList<Member>();
+    private static final Scanner input = new Scanner(System.in); // inisiasi scanner
+    private static SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy"); // membuat format untuk tanggal
+    private static Calendar cal = Calendar.getInstance(); // inisiasi kalendar harian
+    private static ArrayList<Nota> notaList = new ArrayList<Nota>(); // inisiasi arraylist untuk menampung nota aktif
+    private static ArrayList<Member> memberList = new ArrayList<Member>(); // inisiasi arraylist untuk menampung member
 
-    public static void main(String[] args) {
+    public static void main(String[] args) { // main program untuk meminta input pilihan menu yang ingin dijalankan
         boolean isRunning = true;
-        while (isRunning) {
-            printMenu();
-            System.out.print("Pilihan : ");
-            String command = input.nextLine();
+        while (isRunning) { // selama isRunning bernilai true, program akan terus berjalan
+            printMenu(); //mencetak pilihan menu
+            System.out.print("Pilihan : "); 
+            String command = input.nextLine(); // meminta input pilihan menu
             System.out.println("================================");
             switch (command){
                 case "1" -> handleGenerateUser(); // generate member
@@ -34,25 +36,33 @@ public class MainMenu {
         System.out.println("Terima kasih telah menggunakan NotaGenerator!");
     }
 
+    /* Method untuk menambahkan member baru 
+        1. input nama dan nomor hp akan divalidasi apakah sudah ada atau belum dengan memprosesnya ke method generateId
+        2. jika input valid maka akan diinisiasi newMember yang kemudian ditambahkan ke memberList
+        3. newMember tersebut kemudian diset id nya sesuai dengan output generateId
+     */ 
     private static void handleGenerateUser() {
         // TODO: handle generate user
+        // meminta input ke user
         System.out.println("Masukkan nama Anda: ");
         String nama = input.nextLine();
         System.out.println("Masukkan nomor handphone Anda: ");
         String noHP = input.nextLine();
 
-        while (noHP.matches("\\d+") == false){ // loop untuk validasi nomor HP
+        // validasi nomor HP dengan regex, program keluar dari loop hanya jika input valid
+        while (noHP.matches("\\d+") == false){ // jika bukan digit maka user perlu input ulang
             System.out.println("Field nomor hp hanya menerima digit.");
             noHP = input.nextLine();
         }
-
-        if (validateMember(generateId(nama, noHP)) == false){
+        
+        // validasi apakah member dengan id yang sama sudah pernah ada
+        if (validateMember(generateId(nama, noHP)) == false){ // jika belum ada, newMember diinisasi dan ditambahkan ke memberList
             Member newMember = new Member(nama, noHP);
             memberList.add(newMember);
-            newMember.setId(generateId(nama, noHP));
+            newMember.setId(generateId(nama, noHP)); // mengeset id newMember sesuai output method generateId
             System.out.printf("Berhasil membuat member dengan ID %s!\n", newMember.getId());
         }
-        else {
+        else { // 
             System.out.printf("Member dengan nama %s dan nomor hp %s sudah ada!\n", nama, noHP);
         }
     }
@@ -144,11 +154,13 @@ public class MainMenu {
     private static void handleAmbilCucian() {
         // TODO: handle ambil cucian
         int idNota = 0;
+        String strIdNota;
         
         while (true) {
             try {
                 System.out.println("Masukan ID nota yang akan diambil: ");
-                idNota = Integer.parseInt(input.nextLine());
+                strIdNota = input.nextLine();
+                idNota = Integer.parseInt(strIdNota);
                 if (idNota < 0) {
                     throw new NumberFormatException();
                 }
@@ -159,18 +171,18 @@ public class MainMenu {
         }
 
         if (validateNota(idNota) == false){
-            System.out.printf("Nota dengan ID %d tidak ditemukan!\n", idNota);
+            System.out.printf("Nota dengan ID %s tidak ditemukan!\n", strIdNota);
         }
         else{
             for (Nota thisNota : notaList){
                     if (idNota == thisNota.getIdNota()){
                         if (thisNota.getIsReady()){
-                            System.out.printf("Nota dengan ID %d berhasil diambil!", idNota);
+                            System.out.printf("Nota dengan ID %s berhasil diambil!\n", strIdNota);
                             notaList.remove(thisNota);
                             break;
                         }
                         else{
-                            System.out.printf("Nota dengan ID %d gagal diambil!\n", idNota);
+                            System.out.printf("Nota dengan ID %s gagal diambil!\n", strIdNota);
                             break;
                         }
                 }
@@ -181,6 +193,7 @@ public class MainMenu {
 
     private static void handleNextDay() {
         // TODO: handle ganti hari
+        cal.add(Calendar.DAY_OF_YEAR,1);
         System.out.println("Dek Depe tidur hari ini... zzz...");
 
         for(Nota thisNota : notaList){

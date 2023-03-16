@@ -111,11 +111,6 @@ public class Nota {
         return "Belum bisa diambil :(";
     }
 
-    // public String setMember(id){
-
-    // }
-
-
     public String generateNota(String id, String paket, int berat, String tanggalTerima){
         
         // memformat tanggal dan menambahkan tanggal selesai berdasarkan waktu pengerjaan (laundryTime)
@@ -139,7 +134,7 @@ public class Nota {
                 tulisanHarga +
                 "Tanggal Terima  : "+dateReceived+"\n" +
                 "Tanggal Selesai : "+dateCompleted+"\n" + 
-                "Status      	: "+getStatus()+"\n";
+                "Status      	: "+getStatus();
         return nota;
     }
 
