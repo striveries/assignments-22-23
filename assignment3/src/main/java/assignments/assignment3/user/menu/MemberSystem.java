@@ -1,10 +1,12 @@
 package assignments.assignment3.user.menu;
+import java.io.OutputStream;
+
 import assignments.assignment1.NotaGenerator;
 import assignments.assignment3.nota.Nota;
 import assignments.assignment3.nota.NotaManager;
 import assignments.assignment3.nota.service.*;
 import assignments.assignment3.user.Member;
-
+import assignments.assignment3.MainMenu;
 
 
 public class MemberSystem extends SystemCLI {
@@ -51,7 +53,9 @@ public class MemberSystem extends SystemCLI {
     }
 
     private void laundryBaru(){ // membuat nota laundry baru
-        String paket = NotaGenerator.getPaket(); // meminta input jenis paket dengan method getPaket() milik NotaGenerator
+        System.out.println("Masukan paket laundry:");
+        NotaGenerator.showPaket();// menampilkan jenis paket
+        String paket = getPaket(); // meminta input jenis paket dengan method getPaket() milik NotaGenerator
         int berat = NotaGenerator.getBerat(); // meminta input berat paket dengan method getBerat() milik NotaGenerator
         System.out.println("Apakah kamu ingin cucianmu disetrika oleh staff professional kami?\nHanya tambah 1000 / kg");
         System.out.print("[Ketik x untuk tidak mau]: ");
@@ -76,5 +80,26 @@ public class MemberSystem extends SystemCLI {
         for(Nota myNota : loginMember.getNotaList()){
             System.out.println(myNota); // secara otomatis akan memanggil method toString() milik nota tersebut
         }
+    }
+
+    public static String getPaket() {
+        String paket = "";
+        while (true) {
+            System.out.println("Masukan paket laundry:");
+            paket = MainMenu.in.nextLine();
+
+            if (paket.equals("?")) {
+                NotaGenerator.showPaket();
+                continue;
+            }
+
+            if (NotaGenerator.toHargaPaket(paket) < 0) {
+                System.out.printf("Paket %s tidak diketahui\n", paket);
+                System.out.println("[ketik ? untuk mencari tahu jenis paket]");
+            } else {
+                break;
+            }
+        }
+        return paket;
     }
 }
