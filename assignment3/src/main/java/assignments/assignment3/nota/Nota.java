@@ -111,6 +111,9 @@ public class Nota {
     return false jika belum
     */
     public boolean isDone() {
+        if((sisaHariPengerjaan<0)&&(!isDone)){ 
+            return false;
+        }
         for(LaundryService service : services){ // iterasi tiap service dalam array services 
             if(!service.isDone()){ // jika ada service yang belum selesai maka akan return false, alias belum selesai
                 return false;
