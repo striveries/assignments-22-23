@@ -14,6 +14,9 @@ public class NotaManager {
     public static void toNextDay(){
         //TODO: implement skip hari
         cal.add(Calendar.DATE, 1);
+        for(Nota nota:notaList){
+            nota.toNextDay();
+        }
         System.out.println("Kamu tidur hari ini... zzz...");
     }
 

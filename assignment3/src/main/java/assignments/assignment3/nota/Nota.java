@@ -55,7 +55,7 @@ public class Nota {
         for (LaundryService service : services){ // menambahkan biaya dari additional services yang dipilih
             harga += service.getHarga(berat);
         }
-        if((sisaHariPengerjaan<=0)&&(!isDone())){ // jika sudah melewati masa deadline (sisaHariPengerjaan negatif) dan pekerjaan masih belum selesai
+        if((sisaHariPengerjaan<0)&&(!isDone())){ // jika sudah melewati masa deadline (sisaHariPengerjaan negatif) dan pekerjaan masih belum selesai
             harga -= ((sisaHariPengerjaan*-1) * 2000); // mengurangi harga sesuai biaya kompensasi
         }
         if (harga<0){ // jika harga bernilai negatif maka akan diubah ke nilai minimum 0
@@ -99,7 +99,7 @@ public class Nota {
         }
         baseHarga = calculateHarga(); // kalkulasi harga untuk laundry
         nota += "Harga Akhir: " + baseHarga ;
-        if((sisaHariPengerjaan<=0)&&(!isDone())){ // jika sisa hari pengerjaan sudah bernilai negatif 
+        if((sisaHariPengerjaan<0)&&(!isDone())){ // jika sisa hari pengerjaan sudah bernilai negatif 
             nota += "\nAda kompensasi keterlambatan " + (sisaHariPengerjaan*-1) +" * 2000 hari"; // kompensasi sebesar 2000 per hari keterlambatan
         }
         return nota;

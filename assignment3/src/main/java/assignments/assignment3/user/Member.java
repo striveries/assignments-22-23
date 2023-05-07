@@ -44,7 +44,7 @@ public class Member {
         notaList = temp; // meng-assign nilai temp var ke notaList
 
         NotaManager.addNota(nota); // menambahkan nota ke array kumpulan nota di NotaManager
-        System.out.println("Berhasil menambahkan nota!");
+        System.out.println("Nota berhasil dibuat!");
     }
 
     /**
