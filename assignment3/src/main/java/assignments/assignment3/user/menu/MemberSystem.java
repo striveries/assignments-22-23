@@ -1,12 +1,14 @@
 package assignments.assignment3.user.menu;
 import java.io.OutputStream;
+import java.util.Scanner;
 
 import assignments.assignment1.NotaGenerator;
 import assignments.assignment3.nota.Nota;
 import assignments.assignment3.nota.NotaManager;
 import assignments.assignment3.nota.service.*;
 import assignments.assignment3.user.Member;
-import assignments.assignment3.MainMenu;
+
+import java.util.Scanner;
 
 
 public class MemberSystem extends SystemCLI {
@@ -83,10 +85,11 @@ public class MemberSystem extends SystemCLI {
     }
 
     public static String getPaket() {
+        Scanner in = new Scanner(System.in);
         String paket = "";
         while (true) {
             System.out.println("Masukan paket laundry:");
-            paket = MainMenu.in.nextLine();
+            paket = in.nextLine();
 
             if (paket.equals("?")) {
                 NotaGenerator.showPaket();
@@ -100,6 +103,7 @@ public class MemberSystem extends SystemCLI {
                 break;
             }
         }
+        in.close();
         return paket;
     }
 }
