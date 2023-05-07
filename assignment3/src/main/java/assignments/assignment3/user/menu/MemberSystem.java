@@ -1,6 +1,4 @@
 package assignments.assignment3.user.menu;
-import java.io.OutputStream;
-import java.util.Scanner;
 
 import assignments.assignment1.NotaGenerator;
 import assignments.assignment3.nota.Nota;
@@ -8,10 +6,9 @@ import assignments.assignment3.nota.NotaManager;
 import assignments.assignment3.nota.service.*;
 import assignments.assignment3.user.Member;
 
-import java.util.Scanner;
-
 
 public class MemberSystem extends SystemCLI {
+
     /**
      * Memproses pilihan dari Member yang masuk ke sistem ini sesuai dengan menu specific.
      *
@@ -55,8 +52,6 @@ public class MemberSystem extends SystemCLI {
     }
 
     private void laundryBaru(){ // membuat nota laundry baru
-        System.out.println("Masukan paket laundry:");
-        NotaGenerator.showPaket();// menampilkan jenis paket
         String paket = getPaket(); // meminta input jenis paket dengan method getPaket() milik NotaGenerator
         int berat = NotaGenerator.getBerat(); // meminta input berat paket dengan method getBerat() milik NotaGenerator
         System.out.println("Apakah kamu ingin cucianmu disetrika oleh staff professional kami?\nHanya tambah 1000 / kg");
@@ -75,7 +70,6 @@ public class MemberSystem extends SystemCLI {
             newNota.addService(new AntarService()); // service setrika akan ditambahkan ke array kumpulan service milik nota tersebut
         }
        loginMember.addNota(newNota);// menambahkan nota baru ke kumpulan nota milik member
-       
     }
 
     private void detailNotaSaya(){ // mencetak detail nota
@@ -84,26 +78,18 @@ public class MemberSystem extends SystemCLI {
         }
     }
 
-    public static String getPaket() {
-        Scanner in = new Scanner(System.in);
+    public String getPaket() {
         String paket = "";
         while (true) {
             System.out.println("Masukan paket laundry:");
+            NotaGenerator.showPaket();
             paket = in.nextLine();
-
-            if (paket.equals("?")) {
-                NotaGenerator.showPaket();
-                continue;
-            }
-
             if (NotaGenerator.toHargaPaket(paket) < 0) {
                 System.out.printf("Paket %s tidak diketahui\n", paket);
-                System.out.println("[ketik ? untuk mencari tahu jenis paket]");
             } else {
                 break;
             }
         }
-        in.close();
         return paket;
     }
 }
