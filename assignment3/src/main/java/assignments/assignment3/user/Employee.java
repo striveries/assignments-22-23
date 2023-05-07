@@ -1,11 +1,12 @@
 package assignments.assignment3.user;
 
 public class Employee extends Member {
-    public static int employeeCount = 0;
+    public static int employeeCount = 0; // untuk menghitung jumlah employee
+
+    // inisiasi constructor untuk kelas Employee
     public Employee(String nama, String password) {
         super(nama, generateId(nama), password);
     }
-
     /**
      * Membuat ID employee dari nama employee dengan format
      * NAMA_DEPAN-[jumlah employee, mulai dari 0]
@@ -13,8 +14,7 @@ public class Employee extends Member {
      *
      * @param nama -> Nama lengkap dari employee
      */
-    private static String generateId(String nama) {
-        // TODO
+    private static String generateId(String nama) { // method yang membuat ID untuk employee
         String id = nama.toUpperCase();
          if (id.contains(" ")){ // memotong string agar hanya 1 kata pertama yang diambil
              id = nama.substring(0,nama.indexOf(' ')).toUpperCase();

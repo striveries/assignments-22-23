@@ -42,7 +42,6 @@ public class MainMenu {
                 default -> System.out.println("Pilihan tidak valid, silakan coba lagi.");
             }
         }
-
         in.close();
     }
 

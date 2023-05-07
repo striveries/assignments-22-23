@@ -1,14 +1,12 @@
 package assignments.assignment3.user.menu;
 
+// import method yang diperlukan
 import assignments.assignment3.user.Member;
-
 import java.util.Scanner;
 
-import java.util.ArrayList;
-
 public abstract class SystemCLI {
-    //protected Member[] memberList = new Member[0]; diganti arraylist
-    protected ArrayList<Member> memberList = new ArrayList<Member>();
+    // inisiasi atribut yang dibutuhkan
+    protected Member[] memberList = new Member[0];
     protected Member loginMember;
     protected Scanner in;
 
@@ -20,17 +18,15 @@ public abstract class SystemCLI {
      * @param inputId -> ID user yang akan diautentikasi.
      * @param inputPassword -> password user yang akan diautentikasi.
      */
-    public void login(Scanner in, String inputId, String inputPassword){
-        Member authMember = authUser(inputId, inputPassword);
-
-        if (authMember != null) {
+    public void login(Scanner in, String inputId, String inputPassword){ // method untuk autentikasi user saat login
+        Member authMember = authUser(inputId, inputPassword); // auth user akan me-return user tersebut apabila input valid, apabila tidak valid maka akan return null
+        if (authMember != null) { // jika authMember valid maka login sukses
             this.in = in;
             System.out.println("Login successful!");
             run(in, authMember);
             return;
         }
-
-        System.out.println("Invalid ID or password.");
+        System.out.println("Invalid ID or password."); // jika authMember tidak valid maka tidak bisa login
     };
 
     /**
@@ -45,9 +41,6 @@ public abstract class SystemCLI {
         while (!logout) {
             displayMenu();
             int choice = in.nextInt(); // validasiiiiiiiii
-
-
-
             in.nextLine();
             logout = processChoice(choice);
         }
@@ -63,11 +56,11 @@ public abstract class SystemCLI {
      * @return  Member object yang diautentikasi, null jika autentikasi gagal.
      */
     public Member authUser(String id, String pass) {
-        for (Member user : memberList) {
-            if (!user.getId().equals(id)) {
+        for (Member user : memberList) { // iterasi tiap member dalam memberList
+            if (!user.getId().equals(id)) { // jika id nya tidak sama denganid yang sedang diterasi maka loop ini akan di-skip
                 continue;
             }
-            if(user.login(id, pass)){
+            if(user.login(id, pass)){ // jika return user login adalah true maka return Member user tersebut
                 return user;
             }
             return null;
@@ -81,9 +74,9 @@ public abstract class SystemCLI {
      * @param id -> ID yang akan diperiksa.
      * @return true jika ada member dengan ID yang diberikan, false jika tidak.
      */
-    public boolean isMemberExist(String id){
-        for (Member member: memberList) {
-            if(member.getId().equals(id)){
+    public boolean isMemberExist(String id){ // method untuk mengecek apakah member ada di dalam memberList
+        for (Member member: memberList) { // iterasi tiap member dalam memberList
+            if(member.getId().equals(id)){ // jika id yang sedang diiterasi sama dnegan id parameter maka akan return true, dimana user member exist
                 return true;
             }
         }
@@ -93,9 +86,9 @@ public abstract class SystemCLI {
     /**
      * Displays main menu untuk user yang menggunakan sistem.
      */
-    protected void displayMenu(){
+    protected void displayMenu(){ // mencetak main menu
         System.out.printf("\nLogin as : %s\nSelamat datang %s!\n\n", loginMember.getId(), loginMember.getNama());
-        displaySpecificMenu();
+        displaySpecificMenu(); // mencetak menu sesuai dengan jenis user / rolesnya
         System.out.print("Apa yang ingin Anda lakukan hari ini? ");
     }
 
