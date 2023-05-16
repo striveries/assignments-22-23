@@ -1,14 +1,12 @@
-# TP 3: Inheritance, Abstract Classes, and Interfaces
+# TP 4: GUI & Event-driven programming
 
 CSGE601021 Dasar-Dasar Pemrograman 2 @ Fakultas Ilmu Komputer Universitas Indonesia, Semester Genap 2022/2023
 
 Tugas Pemrograman ini mencakup materi berikut:
 
-- Inheritance
-- Interface
-- Abstract class
-- Composition
-- Polymorphism
+- GUI
+- Event-Driven Programming
+- ~~Kreativitas kalian~~
 
 ## Daftar Isi
 
@@ -22,7 +20,7 @@ Tugas Pemrograman ini mencakup materi berikut:
 
 ## Dokumen Soal
 
-Dokumen soal dapat diakses melalui [link ini](https://docs.google.com/document/d/1cZRl5ejHhXBfwHqB438DQUunr9YPhZR8MCngyTYGmfs/edit?usp=sharing).
+Dokumen soal dapat diakses melalui [link ini](https://docs.google.com/document/d/1wRh1-S1YIR3Rs6yeQX1YqX-7NE3WJscyl4yIKQKq3jo/edit?usp=sharing).
 
 ## Persiapan
 
@@ -30,8 +28,7 @@ Silakan ikuti persiapan yang ada pada berkas [`README.md`](../README.md) di
 *root* repositori ini.
 
 > Template pengerjaan tugas ini disediakan di *path*
-`src\main\java\assignments\assignment3`
-
+`src\main\java\assignments\assignment4`
 ## Menjalankan dan menguji program
 
 > Catatan:<br>
@@ -39,15 +36,14 @@ Silakan ikuti persiapan yang ada pada berkas [`README.md`](../README.md) di
     menggunakan Linux/Mac.
 > - Tanda <kbd>></kbd> pada awal *command* tidak perlu ditulis.
     Digunakan sebagai pembeda antara *command* dan *output*-nya
-
-Kamu bisa menjalankan beberapa *task* dengan Gradle melalui IDE atau
-terminal/Command Prompt.
-Jalankan *task* tersebut di **root folder** dari repository ini.
+    Kamu bisa menjalankan beberapa *task* dengan Gradle melalui IDE atau
+    terminal/Command Prompt.
+    Jalankan *task* tersebut di **root folder** dari repository ini.
 
 Untuk menjalankan program:
 
 ```bash
-> gradlew.bat :assignment3:run --console plain
+> gradlew.bat :assignment4:run --console plain
 ```
 
 Jika kamu tidak ingin menggunakan Gradle, kamu juga bisa melakukan kompilasi
@@ -57,24 +53,19 @@ direktori `src\main\java`, *compile* semua berkas `.java` kamu, dan jalankan
 
 ```bash
 > cd src\main\java
-src\main\java> javac assignments\assignment3\*.java
-src\main\java> java assignments.assignment3.MainMenu
+src\main\java> javac assignments\assignment4\*.java
+src\main\java> java assignments.assignment4.MainMenu
 ```
 
-Untuk menguji program dengan *test case* yang disediakan:
-
-```bash
-> gradlew.bat :assignment3:test
-```
+Tidak ada automated test untuk TP ini. Silakan test mandiri GUI kalian.
 
 > Catatan: <kbd>src\main\java></kbd> tidak perlu ditulis saat menjalankan *command*-nya (hanya menandakan bahwa anda sudah berada di folder src\main\java)
-
 ## Pengumpulan
 
 Simpan pekerjaan kamu, lalu lakukan `git add`, `git commit`, dan `git push`
 sebagaimana dijelaskan pada dokumen
 Getting Started with a Java Project (Latihan Tugas Pemrograman).
-*Push* solusi kamu **sebelum 16 Maret 2023 pukul 23.55**. Disarankan untuk
+*Push* solusi kamu **sebelum 18 Mei 2023 pukul 23.55**. Disarankan untuk
 *push* **sebelum pukul 22.00** untuk mengantisipasi antrean pada GitHub
 Pipelines.
 
@@ -82,34 +73,27 @@ Jangan lupa untuk menambahkan asdos kamu dan dekdepe sebagai *member* di reposit
 Tim pengajar hanya akan menilai pekerjaan kamu berdasarkan ***commit* terbaru**
 yang **sudah di-*push* sebelum waktu dan tanggal yang ditentukan**. *Commit*
 tersebut diidentifikasi dengan memeriksa GitHub Pipelines.
-
 > Catatan: *timestamp* pada GitHub Pipelines tidak pernah bohong.
 > *So, no funny business, please :)*
-
 ## Daftar pekerjaan
-
 ### Daftar pekerjaan wajib
-
-- [ ] Buat sekurang-kurangnya 2 *commit* yang mengandung progres kamu dalam
-  mengerjakan Tugas Pemrograman 2.
+- [ ] Buat sekurang-kurangnya 1 *commit* yang mengandung progres kamu dalam
+  mengerjakan Tugas Pemrograman 4.
 - [ ] *Push* *commit* kamu ke repositori Git *online* yang ada pada proyek
   GitHub kamu.
-- [ ] Implementasikan class `Member` dengan benar.
-- [ ] Implementasikan class `Nota` dengan benar.
-- [ ] Implementasikan concrete class untuk interface `LaundryService`
-- [ ] Implementasikan menu spesifik untuk setiap role dengan _inherit_ abstract class `SystemCLI`
-- [ ] Implementasikan class `Employee` dan `Member`, dengan `Employee` _inherit_ `Member`
-- [ ] Implementasikan class `LoginManager`
-- [ ] Melengkapi fungsionalitas class `MainMenu` dengan benar.
+- [ ] Implementasikan beberapa method pada MainFrame dengan benar.
+- [ ] Implementasikan class `HomeGUI` dengan benar.
+- [ ] Implementasikan class `RegisterGUI` dengan benar.
+- [ ] Implementasikan class `LoginGUI` dengan benar.
+- [ ] Implementasikan semua class dalam package `gui.member` dengan benar.
 - [ ] Silakan menambah class atau method yang diperlukan.
 - [ ] Demonstrasikan program kamu ke asdos kamu.
-
-
-
-
+- [ ] Be creative! ini adalah Tugas Pemrogram (semoga) terakhir kalian di DDP2.
 ## Penilaian
-
-- TBA
+- 40% Fungsionalitas program
+- 10% Validasi input & tampilan error message
+- 5% Informasi prompt program
+- 5% Kerapian GUI dan output program
 - 5% Dokumentasi (kejelasan kode)
 - 5% Standar penulisan kode* (kerapian kode)
 - 30% Demo program dengan asisten dosen
