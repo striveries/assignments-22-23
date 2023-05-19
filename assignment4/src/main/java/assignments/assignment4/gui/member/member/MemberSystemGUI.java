@@ -6,22 +6,23 @@ import assignments.assignment3.user.menu.SystemCLI;
 import assignments.assignment4.MainFrame;
 import assignments.assignment4.gui.member.AbstractMemberGUI;
 
+// import library yang dibutuhkan
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class MemberSystemGUI extends AbstractMemberGUI {
-    public static final String KEY = "MEMBER";
+    public static final String KEY = "MEMBER"; // setting key untuk class MemberSystemGUI
 
-    public MemberSystemGUI(SystemCLI systemCLI) {
+    public MemberSystemGUI(SystemCLI systemCLI) { // inisiasi constructor
         super(systemCLI);
     }
 
-    @Override
+    @Override // getter KEY
     public String getPageName(){
         return KEY;
     }
-
+    // getter untuk loggedInMember
     public Member getLoggedInMember(){
         return loggedInMember;
     }
@@ -34,7 +35,7 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * */
     @Override
     protected JButton[] createButtons() {
-        // TODO
+        // membuat button yang akan muncul pada memberSystemGUI
         JButton createNotaButton = new JButton("Saya ingin laundry");
         createNotaButton.setVisible(true);
         createNotaButton.setFocusable(false);
@@ -42,7 +43,7 @@ public class MemberSystemGUI extends AbstractMemberGUI {
         JButton showDetailNotaButton = new JButton("Lihat detail nota saya");
         showDetailNotaButton.setVisible(true);
         showDetailNotaButton.setFocusable(false); 
-        return new JButton[]{
+        return new JButton[]{ // return button yang telah dibuat
             createNotaButton, showDetailNotaButton
         };
     }
@@ -55,7 +56,7 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * */
     @Override
     protected ActionListener[] createActionListeners() {
-        return new ActionListener[]{
+        return new ActionListener[]{ // return actionlistener yang akan digunakan oleh button yang telah dibuat
                 e -> createNota(),
                 e -> showDetailNota(),
         };
@@ -66,29 +67,28 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * Akan dipanggil jika pengguna menekan button pertama pada createButtons
      * */
     private void showDetailNota() {
-        // TODO
-        String listDetailNota = "";
-        JTextArea detailNotaTextArea = new JTextArea();
+        String listDetailNota = ""; // menyimpan semua text detail nota
+        JTextArea detailNotaTextArea = new JTextArea(); // tempat detail nota ditampilkan
 
-        if (loggedInMember.getNotaList().length == 0){
+        if (loggedInMember.getNotaList().length == 0){// jika tidak ada nota di notalist
             detailNotaTextArea.setText("Belum pernah laundry di CuciCuci, hiks :'(");
             
         } else{
-            for (Nota nota:loggedInMember.getNotaList()) {
-                listDetailNota += (nota.toString() + "\n");
+            for (Nota nota:loggedInMember.getNotaList()) { // iterasi tiap nota di dalam notaLIst
+                listDetailNota += (nota.toString() + "\n"); // menambahkan detail nota ke listdetailNota
             }
-            detailNotaTextArea.setText(listDetailNota);
+            detailNotaTextArea.setText(listDetailNota); // menambahkan isi total detial nota ke textarea
         }
-            
+        // setting textarea
         detailNotaTextArea.setColumns(30);
         detailNotaTextArea.setLineWrap(true);
         detailNotaTextArea.setWrapStyleWord(true);
         detailNotaTextArea.setSize(detailNotaTextArea.getPreferredSize().width, 1);
         detailNotaTextArea.setEditable(false);
 
-        JScrollPane scrollPane =  new JScrollPane(detailNotaTextArea);
-        scrollPane.setPreferredSize(new Dimension(400, 300));
-        JOptionPane.showMessageDialog(null, scrollPane, "Detail Nota", JOptionPane.INFORMATION_MESSAGE);
+        JScrollPane scrollPane =  new JScrollPane(detailNotaTextArea); // menambahkan textarea ke scrollPane agar bisa discroll
+        scrollPane.setPreferredSize(new Dimension(400, 300)); // setting ukuran
+        JOptionPane.showMessageDialog(null, scrollPane, "Detail Nota", JOptionPane.INFORMATION_MESSAGE); // menambahkan scrollpane ke optionpane agar menjadi popup
     }
 
     /**
@@ -96,7 +96,7 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * Akan dipanggil jika pengguna menekan button kedua pada createButtons
      * */
     private void createNota() {
-        // TODO
+        // navigasi ke panel createnota
         MainFrame.getInstance().navigateTo(CreateNotaGUI.KEY);
     }
 

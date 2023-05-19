@@ -3,18 +3,16 @@ package assignments.assignment4.gui;
 import static assignments.assignment1.NotaGenerator.isNumeric;
 import assignments.assignment3.LoginManager;
 import assignments.assignment3.user.Member;
-import assignments.assignment3.user.menu.MemberSystem;
 import assignments.assignment4.MainFrame;
-import assignments.assignment4.gui.member.member.MemberSystemGUI;
 
-import javax.naming.NameAlreadyBoundException;
+// import library yang dibutuhkan
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
 public class RegisterGUI extends JPanel {
+    // inisiasi variabel yang dibutuhkan
     public static final String KEY = "REGISTER";
     private JPanel mainPanel;
     private JLabel nameLabel;
@@ -29,15 +27,16 @@ public class RegisterGUI extends JPanel {
     GridBagConstraints gbc;
 
     public RegisterGUI(LoginManager loginManager) {
-        super(new BorderLayout()); // Setup layout, Feel free to make any changes
-        this.loginManager = loginManager;
+        super(new BorderLayout()); 
+        this.loginManager = loginManager; 
 
         // Set up main panel, Feel free to make any changes
         mainPanel = new JPanel(new GridBagLayout());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        mainPanel.setBackground(MainFrame.c1);
         gbc = new GridBagConstraints(); 
-        initGUI();
-        add(mainPanel, BorderLayout.CENTER);
+        initGUI(); // Menambahkan kompinen gui
+        add(mainPanel, BorderLayout.CENTER); // menambahkan mainpanel ke kumpulan JPanel di mainframe
     }
     
     /**
@@ -46,20 +45,21 @@ public class RegisterGUI extends JPanel {
      * Be creative and have fun!
      * */
     private void initGUI() {
-        // TODO
+        // setting gridbagconstraints untuk tampilan layout gui
         gbc.gridx = 0;
         gbc.gridy = GridBagConstraints.RELATIVE;
-        gbc.fill = GridBagConstraints.NONE;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.anchor = GridBagConstraints.WEST;
-        gbc.weightx = 1.0;
+        gbc.weightx = 0.5;
         gbc.weighty = 0.5;
         gbc.insets = new Insets(5, 5, 5, 5);
         
-        nameLabel = new JLabel("Masukkan nama Anda");
+        // menambahkan komponen yang akan dimunculkan pada GUI Register
+        nameLabel = new JLabel("Masukkan nama Anda:");
         mainPanel.add(nameLabel, gbc);
 
         nameTextField = new JTextField();
-        nameTextField.setPreferredSize(new Dimension(500, 30));
+        nameTextField.setPreferredSize(new Dimension(670, 30));
         nameTextField.setVisible(true);
         mainPanel.add(nameTextField, gbc);
 
@@ -67,7 +67,7 @@ public class RegisterGUI extends JPanel {
         mainPanel.add(phoneLabel, gbc);
 
         phoneTextField = new JTextField();
-        phoneTextField.setPreferredSize(new Dimension(500, 30));
+        phoneTextField.setPreferredSize(new Dimension(670, 30));
         phoneTextField.setVisible(true);
         mainPanel.add(phoneTextField, gbc);
 
@@ -75,23 +75,28 @@ public class RegisterGUI extends JPanel {
         mainPanel.add(passwordLabel, gbc);
 
         passwordField = new JPasswordField();
-        passwordField.setPreferredSize(new Dimension(500, 30));
+        passwordField.setPreferredSize(new Dimension(670, 30));
         passwordField.setVisible(true);
         mainPanel.add(passwordField, gbc);
 
+        gbc.fill = GridBagConstraints.NONE;
+
         registerButton = new JButton("Register");
-        registerButton.setPreferredSize(new Dimension(150, 30)); // setting ukuran
+        registerButton.setPreferredSize(new Dimension(150, 50)); // setting ukuran
+        registerButton.setForeground(MainFrame.c2);
         registerButton.setVisible(true);
         registerButton.setFocusable(false);
 
         backButton = new JButton("Kembali");
-        backButton.setPreferredSize(new Dimension(150, 30)); // setting ukuran
+        backButton.setPreferredSize(new Dimension(150, 50)); // setting ukuran
         backButton.setVisible(true);
         backButton.setFocusable(false);
         
+        // mengumpulkan button
         JButton[] buttons = {
             registerButton, backButton
         };
+        // membuat actionlistener untuk tiap button
         ActionListener[] listeners = {
                 e -> handleRegister(),
                 e -> handleBack()
@@ -99,10 +104,10 @@ public class RegisterGUI extends JPanel {
 
         gbc.anchor = GridBagConstraints.CENTER;
 
-        for (int i = 0; i < buttons.length; i++) {
+        for (int i = 0; i < buttons.length; i++) { // iterasi tiap button
             JButton button = buttons[i];
-            button.addActionListener(listeners[i]);
-            mainPanel.add(button, gbc);
+            button.addActionListener(listeners[i]); // menambahkan actionlistener ke button
+            mainPanel.add(button, gbc); // menambahkan button ke mainpanel
         }
 
     }
@@ -112,8 +117,8 @@ public class RegisterGUI extends JPanel {
      * Akan dipanggil jika pengguna menekan "backButton"
      * */
     private void handleBack() {
-        reset();
-        MainFrame.getInstance().navigateTo(HomeGUI.KEY);
+        reset(); // mengosongkantiap elemen GUI seperti textfield
+        MainFrame.getInstance().navigateTo(HomeGUI.KEY); // navigasi ke homeGUI
     }
 
     /**
@@ -121,31 +126,29 @@ public class RegisterGUI extends JPanel {
     * Akan dipanggil jika pengguna menekan "registerButton"
     * */
     private void handleRegister() {
-        // TODO
-        // tambahkan member ke data
-        String nama = nameTextField.getText();
-        String noHp = phoneTextField.getText();
-        String password = String.valueOf(passwordField.getPassword());
-        if ((noHp.equals(""))||(password.equals(""))||(nama.equals(""))){
+        String nama = nameTextField.getText(); // mengambil informasi nama dari textfield
+        String noHp = phoneTextField.getText(); // mengambil informasi noHP dari textfield
+        String password = String.valueOf(passwordField.getPassword());  // mengambil informasi password dari passwordfield
+        if ((noHp.equals(""))||(password.equals(""))||(nama.equals(""))){ // jika ada field yang kosong maka tidak valid
             JOptionPane.showMessageDialog(null, "Semua field diatas wajib diisi!", "Empty Field", JOptionPane.ERROR_MESSAGE);
         }
-        else if (!isNumeric(noHp)){
+        else if (!isNumeric(noHp)){ // jika nomorhp bukan digit maka tidak valid
             JOptionPane.showMessageDialog(null, "Nomor handphone harus berisi angka", "Invalid Phone Number", JOptionPane.ERROR_MESSAGE);
             phoneTextField.setText("");
         }
         else {
-            Member newMember = loginManager.register(nama, noHp, password);
+            Member newMember = loginManager.register(nama.trim(), noHp, password); // inisiasi member baru dengan memanggil method register milik login manager
             if (newMember != null){
                 JOptionPane.showMessageDialog(null, ("Berhasil membuat user dengan ID " + newMember.getId()),"Registration Successful", JOptionPane.INFORMATION_MESSAGE);
             }
-            else {
+            else { // jika newMember berisi null maka berarti tidak valid
                 JOptionPane.showMessageDialog(null, String.format("User dengan nama %s dan nomor hp %s sudah ada!", nama, noHp),"Registration Failed", JOptionPane.ERROR_MESSAGE);
             }
-            reset();
-            MainFrame.getInstance().navigateTo(HomeGUI.KEY);
+            reset(); // mengosongkan tiap elemen GUI seperti textfield
+            MainFrame.getInstance().navigateTo(HomeGUI.KEY);// navigasi ke homeGUI
         }
     }
-
+    // method untuk mengosongkan tiap elemen GUI seperti textfield
     public void reset(){
         nameTextField.setText("");
         phoneTextField.setText("");

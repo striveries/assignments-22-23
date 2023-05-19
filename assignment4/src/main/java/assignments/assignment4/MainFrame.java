@@ -32,15 +32,13 @@ public class MainFrame extends JFrame{
     private final EmployeeSystemGUI employeeSystemGUI = new EmployeeSystemGUI(employeeSystem);
     private final MemberSystemGUI memberSystemGUI = new MemberSystemGUI(memberSystem);
     private final CreateNotaGUI createNotaGUI = new CreateNotaGUI(memberSystemGUI);
+    public static Color c1 = new Color(205, 240, 255);  // setting light blue color
+    public static Color c2 = new Color(0, 142, 204);  // setting light blue color
 
     private MainFrame(){
         super("CuciCuciSystem");
 //        TODO: uncomment code dibawah ini setelah kamu implmentasikan addEmployee pada EmployeeSystem.
 //        // for context dari 2 employee baru ini : https://ristek.link/karyawan-baru-cucicuci
-//        employeeSystem.addEmployee(new Employee[]{
-//                new Employee("delta Epsilon Huha Huha", "ImplicitDiff"),
-//                new Employee("Regret", "FansBeratKanaArima")
-//        });
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(700, 432);
         setVisible(true);
@@ -102,9 +100,8 @@ public class MainFrame extends JFrame{
      * */
     public boolean login(String id, String password){
 
-        for (Loginable panel:loginablePanel) {
-            // TODO
-            if (panel.login(id, password)){
+        for (Loginable panel:loginablePanel) {// iterasi tiap panel, yaitu membersystemgui dan employeesystemgui
+            if (panel.login(id, password)){ // jika return login nya true maka masuk ke  panel itu dengan navigateTo dan return true
                 navigateTo(panel.getPageName());
                 return true;
             }
@@ -117,11 +114,11 @@ public class MainFrame extends JFrame{
      * Method untuk logout dari sistem, kemudian menampilkan halaman Home.
      * */
     public void logout(){
-        for (Loginable panel:
+        for (Loginable panel: // logout dari tiap panel
                 loginablePanel) {
             panel.logout();
         }
-        navigateTo(HomeGUI.KEY);
+        navigateTo(HomeGUI.KEY); // kembali ke homeGUI
     }
 
     public static void main(String[] args) {

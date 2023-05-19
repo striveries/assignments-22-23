@@ -3,13 +3,14 @@ package assignments.assignment4.gui.member;
 import assignments.assignment3.user.Member;
 import assignments.assignment3.user.menu.SystemCLI;
 import assignments.assignment4.MainFrame;
-
+// import library yang dibutuhkan
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public abstract class AbstractMemberGUI extends JPanel implements Loginable{
+    //   inisiasi atribut yang akan digunakan
     private JLabel welcomeLabel;
     private JLabel loggedInAsLabel;
     protected Member loggedInMember;
@@ -29,7 +30,10 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable{
 
         // Initialize buttons
         JPanel buttonsPanel = initializeButtons();
-        add(buttonsPanel, BorderLayout.CENTER);
+        buttonsPanel.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
+        setBackground(MainFrame.c1);
+        setBorder(BorderFactory.createEmptyBorder(50, 10, 50, 10));
+        add(buttonsPanel, BorderLayout.CENTER); // menambahkan buttonsPanel ke JPanel
     }
 
     /**
@@ -53,23 +57,26 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable{
         gbc.gridy = GridBagConstraints.RELATIVE;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.CENTER;
-        gbc.weightx = 1.0;
+        gbc.weightx = 0.5;
         gbc.weighty = 0.5;
         gbc.insets = new Insets(5, 5, 5, 5);
 
         for (int i = 0; i < buttons.length; i++) {
             JButton button = buttons[i];
+            button.setPreferredSize(new Dimension(200, 50));
             button.addActionListener(listeners[i]);
             buttonsPanel.add(button, gbc);
         }
 
         JButton logoutButton = new JButton("Logout");
+        logoutButton.setPreferredSize(new Dimension(200, 50));
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 MainFrame.getInstance().logout();
             }
         });
+        buttonsPanel.setBackground(MainFrame.c1);
         buttonsPanel.add(logoutButton, gbc);
         return buttonsPanel;
     }
@@ -88,12 +95,11 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable{
      * @return true jika ID dan password sesuai dengan instance member, false jika tidak.
      * */
     public boolean login(String id, String password) {
-        // TODO
-        Member authMember = systemCLI.authUser(id, password);
+        Member authMember = systemCLI.authUser(id, password); // autentifikasi user, jika tidak valid maka akan berisi null
 
-        if (authMember != null) {
+        if (authMember != null) { // memastikan bahwa user valid
             loggedInMember = authMember;
-            welcomeLabel.setText("Welcome! " + loggedInMember.getNama());
+            welcomeLabel.setText("Welcome! " + loggedInMember.getNama()); // memunculkan pesan welcome di GUI
             loggedInAsLabel.setText("Logged in as " + loggedInMember.getId());
             return true;
         }
